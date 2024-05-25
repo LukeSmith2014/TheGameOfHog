@@ -21,8 +21,7 @@ def roll_dice(num_rolls, dice=six_sided):
     # These assert statements ensure that num_rolls is a positive integer.
     assert type(num_rolls) == int, 'num_rolls must be an integer.'
     assert num_rolls > 0, 'Must roll at least once.'
-    # BEGIN PROBLEM 1
-    "*** YOUR CODE HERE ***"
+   
     i = 1
     turn_total = []
     while i <= num_rolls:
@@ -44,8 +43,6 @@ def boar_brawl(player_score, opponent_score):
     opponent_score:   The total score of the other player.
 
     """
-    # BEGIN PROBLEM 2
-    "*** YOUR CODE HERE ***"
     def get_ones_digit(num):
         return abs(num) % 10
 
@@ -81,8 +78,7 @@ def take_turn(num_rolls, player_score, opponent_score, dice=six_sided):
     assert type(num_rolls) == int, 'num_rolls must be an integer.'
     assert num_rolls >= 0, 'Cannot roll a negative number of dice in take_turn.'
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
-    # BEGIN PROBLEM 3
-    "*** YOUR CODE HERE ***"
+    
     if num_rolls == 0:
         return boar_brawl(player_score, opponent_score)
     else:
@@ -111,8 +107,7 @@ def is_prime(n):
 
 def num_factors(n):
     """Return the number of factors of N, including 1 and N itself."""
-    # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    
     i = 1
     count = 0
     while i <= n:
@@ -121,12 +116,9 @@ def num_factors(n):
         i += 1
 
     return count 
-    # END PROBLEM 4
 
 def sus_points(score):
     """Return the new score of a player taking into account the Sus Fuss rule."""
-    # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
 
     count = num_factors(score)
     sus_factors = [3, 4]
@@ -143,24 +135,17 @@ def sus_points(score):
         return score
 
 
-    
-
-
-
-    # END PROBLEM 4
-
 def sus_update(num_rolls, player_score, opponent_score, dice=six_sided):
     """Return the total score of a player who starts their turn with
     PLAYER_SCORE and then rolls NUM_ROLLS DICE, *including* Sus Fuss.
     """
-    # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    
     score = player_score + take_turn(num_rolls, player_score, opponent_score, dice)
     if num_factors(score) == 3 or 4:
         return sus_points(score)
     else:
         return score
-    # END PROBLEM 4
+    
 
 
 def always_roll_5(score, opponent_score):
@@ -197,8 +182,6 @@ def play(strategy0, strategy1, update,
     goal:      The game ends and someone wins when this score is reached.
     """
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
-    # BEGIN PROBLEM 5
-    "*** YOUR CODE HERE ***"
 
 
     while score0 < goal and score1 < goal:    
@@ -209,7 +192,7 @@ def play(strategy0, strategy1, update,
             num_rolls = strategy1(score1, score0)
             score1 = update(num_rolls, score1, score0, dice)
         who = 1 - who
-    # END PROBLEM 5
+    
     return score0, score1
 
 
@@ -232,13 +215,10 @@ def always_roll(n):
     3
     """
     assert n >= 0 and n <= 10
-    # BEGIN PROBLEM 6
-    "*** YOUR CODE HERE ***"
+    
     def constant(score0, score1):
         return n
     return constant
-
-    # END PROBLEM 6
 
 
 def catch_up(score, opponent_score):
@@ -267,8 +247,6 @@ def is_always_roll(strategy, goal=GOAL):
     >>> is_always_roll(catch_up)
     False
     """
-    # BEGIN PROBLEM 7
-    "*** YOUR CODE HERE ***"
 
     def upper_limit(i):
         if i < goal:
@@ -297,10 +275,6 @@ def is_always_roll(strategy, goal=GOAL):
 
 
 
-
-    # END PROBLEM 7
-
-
 def make_averaged(original_function, samples_count=1000):
     """Return a function that returns the average value of ORIGINAL_FUNCTION
     called SAMPLES_COUNT times.
@@ -312,8 +286,7 @@ def make_averaged(original_function, samples_count=1000):
     >>> averaged_dice(1, dice)  # The avg of 10 4's, 10 2's, 10 5's, and 10 1's
     3.0
     """
-    # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+
     def calculate_average(*args):
         total = 0
         i = 0
@@ -327,9 +300,6 @@ def make_averaged(original_function, samples_count=1000):
 
 
 
-    # END PROBLEM 8
-
-
 def max_scoring_num_rolls(dice=six_sided, samples_count=1000):
     """Return the number of dice (1 to 10) that gives the highest average turn score
     by calling roll_dice with the provided DICE a total of SAMPLES_COUNT times.
@@ -339,8 +309,6 @@ def max_scoring_num_rolls(dice=six_sided, samples_count=1000):
     >>> max_scoring_num_rolls(dice)
     
     """
-    # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
     k = 1
     highest_average = 0
 
@@ -353,7 +321,6 @@ def max_scoring_num_rolls(dice=six_sided, samples_count=1000):
         k += 1
 
     return highest_number
-    # END PROBLEM 9
 
 
 def winner(strategy0, strategy1):
@@ -388,7 +355,7 @@ def run_experiments():
     print('boar_strategy win rate:', average_win_rate(boar_strategy))
     print('sus_strategy win rate:', average_win_rate(sus_strategy))
     print('final_strategy win rate:', average_win_rate(final_strategy))
-    "*** You may add additional experiments as you wish ***"
+    
 
 
 
@@ -396,44 +363,28 @@ def boar_strategy(score, opponent_score, threshold=11, num_rolls=6):
     """This strategy returns 0 dice if Boar Brawl gives at least THRESHOLD
     points, and returns NUM_ROLLS otherwise. Ignore score and Sus Fuss.
     """
-    # BEGIN PROBLEM 10
     if boar_brawl(score, opponent_score) >= threshold:
         return 0
     else:
         return num_rolls 
 
-             # Remove this line once implemented.
-    # END PROBLEM 10
-
 
 def sus_strategy(score, opponent_score, threshold=11, num_rolls=6):
     """This strategy returns 0 dice when your score would increase by at least threshold."""
-    # BEGIN PROBLEM 11
+    
     new_score = sus_update(0, score, opponent_score)
 
     if new_score - score >= threshold:
         return 0 
     else:
         return num_rolls
-    # END PROBLEM 11
-
-
-def final_strategy(score, opponent_score):
-    """Write a brief description of your final strategy.
-
-    *** YOUR DESCRIPTION HERE ***
-    """
-    # BEGIN PROBLEM 12
-    return 6  # Remove this line once implemented.
-    # END PROBLEM 12
+    
 
 
 ##########################
 # Command Line Interface #
 ##########################
 
-# NOTE: The function in this section does not need to be changed. It uses
-# features of Python not yet covered in the course.
 
 @main
 def run(*args):
