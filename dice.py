@@ -39,8 +39,6 @@ def make_test_dice(*outcomes):
     >>> dice()
     2
 
-    This function uses Python syntax/techniques not yet covered in this course.
-    The best way to understand it is by reading the documentation and examples.
     """
     assert len(outcomes) > 0, 'You must supply outcomes to make_test_dice'
     for o in outcomes:
